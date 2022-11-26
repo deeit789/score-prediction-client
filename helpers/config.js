@@ -1,6 +1,6 @@
 module.exports = {
   api: {
-    API_URL: "http://103.200.20.106",
+    API_URL: "https://sh.h376.com",
   },
   site: {
     name: "shbet",
