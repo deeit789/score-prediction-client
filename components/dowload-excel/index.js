@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import ReactExport from "react-export-excel";
+import { Button } from "antd";
+
+import { DownloadOutlined } from "@ant-design/icons";
 
 import { getAllDataPrediction } from "../../helpers/helper";
 
@@ -44,7 +47,19 @@ export default function DownloadExcel() {
   const hanleExportExcel = () => {};
 
   return (
-    <ExcelFile filename="Du_lieu_du_doan_ti_so">
+    <ExcelFile
+      filename="du_lieu_du_doan_ti_so"
+      element={
+        <Button
+          type="primary"
+          shape="round"
+          icon={<DownloadOutlined />}
+          size={"large"}
+        >
+          Tải Dữ Liệu
+        </Button>
+      }
+    >
       {dataSet.length > 0 &&
         dataSet.map((item, i) => {
           return (
