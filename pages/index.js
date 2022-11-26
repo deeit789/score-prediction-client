@@ -6,7 +6,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Dự Đoán Tỉ Số</title>
+        <title>DỰ ĐOÁN TỈ SỐ WORLD CUP 2022</title>
         <meta name="description" content="DỰ ĐOÁN TỈ SỐ WORLD CUP 2022" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
