@@ -215,6 +215,14 @@ a {
 .box-match {
   width: 80%;
   margin: 20px auto;
+
+}
+
+.loading-spin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
 }
 
 .item-match {

@@ -9,6 +9,7 @@ import {
   Button,
   notification,
   Form,
+  Spin,
 } from "antd";
 import { ClockCircleOutlined, UserOutlined } from "@ant-design/icons";
 
@@ -217,9 +218,11 @@ function SHBET() {
   const [form] = Form.useForm();
   const [loadingSubmit, setLoadingSubmit] = useState(false);
   const [timeServer, setTimeServer] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const timeServer = await getCurrentTimeMS();
       setTimeServer(timeServer);
       const today = moment(timeServer).format("MM/DD/YYYY");
@@ -239,6 +242,7 @@ function SHBET() {
 
       //handel set date
       const itemToday = dt_date.filter((item) => item.date === today);
+      setLoading(false);
       setDateMatch(itemToday[0]);
     };
 
@@ -247,20 +251,21 @@ function SHBET() {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       const timeServer = await getCurrentTimeMS();
       const today = moment(timeServer).format("MM/DD/YYYY");
       const itemToday = dt_date.filter((item) => item.date === today);
       if (mySwiper !== undefined && !mySwiper.destroyed) {
         mySwiper.slideTo(itemToday[0]._id - 1);
       }
+      setLoading(false);
     };
     fetchData();
   }, [mySwiper]);
 
   const handleClickDate = async (date, index) => {
     if (date === dateMatch.date) return;
-
-    console.log("handleClickDate");
+    setLoading(true);
     form.resetFields();
 
     const itemClicked = dt_date.filter((item) => item.date === date);
@@ -277,20 +282,20 @@ function SHBET() {
         return { data: item, countdown: new Date(formatCountDown) };
       });
 
+    setLoading(false);
     setListData(_listData || []);
     setDateMatch(itemClicked[0]);
   };
 
   const handleSlideChange = async (swiper) => {
-    console.log("handleSlideChange");
     form.resetFields();
     const activeIndex = swiper.activeIndex;
     const item = dt_date.filter((item) => item._id - 1 === activeIndex);
 
     if (dateMatch.date === item[0].date) return;
 
+    setLoading(true);
     const resData = await matchByDate({ date: item[0].date });
-
     const _listData =
       resData.data &&
       resData.data.map((item, i) => {
@@ -301,6 +306,7 @@ function SHBET() {
         return { data: item, countdown: new Date(formatCountDown) };
       });
 
+    setLoading(false);
     setListData(_listData || []);
     setDateMatch(item[0]);
   };
@@ -385,6 +391,98 @@ function SHBET() {
     });
   };
 
+  const showListItemMatch = (matchList) => {
+    if (matchList.length <= 0) {
+      return <p>Không tìm thấy dữ liệu</p>;
+    } else {
+      const itemMatch = matchList.map((item, index) => {
+        let idTeam = 0;
+        if (index === 0) idTeam = index + 1;
+        if (index === 1) idTeam = index + 2;
+        if (index === 2) idTeam = index + 3;
+        if (index === 3) idTeam = index + 4;
+        return (
+          <div
+            className={`item-match ${
+              timeServer > item.countdown ? "item-end-time" : ""
+            }`}
+            key={index}
+          >
+            <div div className="wc-group">
+              {`Bảng ${item.data.group}`}
+            </div>
+            <div className="wc-time-match">
+              <span>
+                <ClockCircleOutlined
+                  style={{
+                    color: "#228B22",
+                  }}
+                />
+              </span>
+              <span className="wc-time">
+                <Countdown
+                  title={`${
+                    timeServer > item.countdown ? "Hết giờ" : "Thời gian còn: "
+                  }`}
+                  value={item.countdown}
+                  onFinish={onFinishCountDown}
+                />
+              </span>
+            </div>
+            <div className="wc-item-match-detail">
+              <div className="wc-home">
+                <div className="wc-home-logo">
+                  <Avatar src={item.data.home_flag} />
+                </div>
+                <div className="wc-home-name">{item.data.home_team}</div>
+              </div>
+              <div className="wc-result">
+                <span className="wc-result-home">
+                  <Form.Item
+                    name={`team${idTeam}score`}
+                    rules={[
+                      {
+                        required: timeServer > item.countdown ? false : true,
+                        message: "",
+                      },
+                    ]}
+                  >
+                    <InputNumber
+                      disabled={timeServer > item.countdown ? true : false}
+                    />
+                  </Form.Item>
+                </span>
+                <span>:</span>
+                <span className="wc-result-away">
+                  <Form.Item
+                    name={`team${idTeam + 1}score`}
+                    rules={[
+                      {
+                        required: timeServer > item.countdown ? false : true,
+                        message: "",
+                      },
+                    ]}
+                  >
+                    <InputNumber
+                      disabled={timeServer > item.countdown ? true : false}
+                    />
+                  </Form.Item>
+                </span>
+              </div>
+              <div className="wc-away">
+                <div className="wc-away-name">{item.data.away_team}</div>
+                <div className="wc-away-logo">
+                  <Avatar src={item.data.away_flag} />
+                </div>
+              </div>
+            </div>
+          </div>
+        );
+      });
+      return itemMatch;
+    }
+  };
+
   return (
     <div className="shbet">
       {contextHolder}
@@ -453,7 +551,6 @@ function SHBET() {
                   })}
               </Swiper>
             </div>
-
             <Form
               name="formMatch"
               initialValues={{
@@ -465,138 +562,38 @@ function SHBET() {
               form={form}
             >
               <div className="box-match">
-                <div className="list-match">
-                  <div className="box-top">
-                    <p className="sc-bigdate">{`${dateMatch.day}, ${dateMatch.text_date}`}</p>
-                    <div className="box-users">
-                      <Form.Item name="playerId">
-                        <Input
-                          placeholder="Vui lòng nhập chính xác tên đăng nhập"
-                          maxLength={13}
-                          prefix={<UserOutlined />}
-                        />
-                      </Form.Item>
-
-                      <Form.Item>
-                        <Button
-                          type="primary"
-                          className="btn-submit"
-                          htmlType="submit"
-                          loading={loadingSubmit}
-                        >
-                          Xác Nhận
-                        </Button>
-                      </Form.Item>
-                    </div>
+                {loading ? (
+                  <div className="loading-spin">
+                    <Spin />
                   </div>
+                ) : (
+                  <div className="list-match">
+                    <div className="box-top">
+                      <p className="sc-bigdate">{`${dateMatch.day}, ${dateMatch.text_date}`}</p>
+                      <div className="box-users">
+                        <Form.Item name="playerId">
+                          <Input
+                            placeholder="Vui lòng nhập chính xác tên đăng nhập!"
+                            maxLength={13}
+                            prefix={<UserOutlined />}
+                          />
+                        </Form.Item>
 
-                  {listData && listData.length > 0
-                    ? listData.map((item, index) => {
-                        let idTeam = 0;
-                        if (index === 0) idTeam = index + 1;
-                        if (index === 1) idTeam = index + 2;
-                        if (index === 2) idTeam = index + 3;
-                        if (index === 3) idTeam = index + 4;
-                        return (
-                          <div
-                            className={`item-match ${
-                              timeServer > item.countdown ? "item-end-time" : ""
-                            }`}
-                            key={index}
+                        <Form.Item>
+                          <Button
+                            type="primary"
+                            className="btn-submit"
+                            htmlType="submit"
+                            loading={loadingSubmit}
                           >
-                            <div div className="wc-group">
-                              {`Bảng ${item.data.group}`}
-                            </div>
-                            <div className="wc-time-match">
-                              <span>
-                                <ClockCircleOutlined
-                                  style={{
-                                    color: "#228B22",
-                                  }}
-                                />
-                              </span>
-                              <span className="wc-time">
-                                <Countdown
-                                  title={`${
-                                    timeServer > item.countdown
-                                      ? "Hết giờ"
-                                      : "Thời gian còn: "
-                                  }`}
-                                  value={item.countdown}
-                                  onFinish={onFinishCountDown}
-                                />
-                              </span>
-                            </div>
-                            <div className="wc-item-match-detail">
-                              <div className="wc-home">
-                                <div className="wc-home-logo">
-                                  <Avatar src={item.data.home_flag} />
-                                </div>
-                                <div className="wc-home-name">
-                                  {item.data.home_team}
-                                </div>
-                              </div>
-                              <div className="wc-result">
-                                <span className="wc-result-home">
-                                  <Form.Item
-                                    name={`team${idTeam}score`}
-                                    rules={[
-                                      {
-                                        required:
-                                          timeServer > item.countdown
-                                            ? false
-                                            : true,
-                                        message: "",
-                                      },
-                                    ]}
-                                  >
-                                    <InputNumber
-                                      disabled={
-                                        timeServer > item.countdown
-                                          ? true
-                                          : false
-                                      }
-                                    />
-                                  </Form.Item>
-                                </span>
-                                <span>:</span>
-                                <span className="wc-result-away">
-                                  <Form.Item
-                                    name={`team${idTeam + 1}score`}
-                                    rules={[
-                                      {
-                                        required:
-                                          timeServer > item.countdown
-                                            ? false
-                                            : true,
-                                        message: "",
-                                      },
-                                    ]}
-                                  >
-                                    <InputNumber
-                                      disabled={
-                                        timeServer > item.countdown
-                                          ? true
-                                          : false
-                                      }
-                                    />
-                                  </Form.Item>
-                                </span>
-                              </div>
-                              <div className="wc-away">
-                                <div className="wc-away-name">
-                                  {item.data.away_team}
-                                </div>
-                                <div className="wc-away-logo">
-                                  <Avatar src={item.data.away_flag} />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })
-                    : "Không tìm thấy dữ liệu"}
-                </div>
+                            Xác Nhận
+                          </Button>
+                        </Form.Item>
+                      </div>
+                    </div>
+                    {showListItemMatch(listData)}
+                  </div>
+                )}
               </div>
             </Form>
           </div>
