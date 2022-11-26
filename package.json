@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "server":"npm run build && npm run start"
   },
   "dependencies": {
     "antd": "^5.0.1",
@@ -17,7 +18,6 @@
     "next": "13.0.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-export-excel": "^0.5.3",
     "swiper": "^8.4.5"
   }
 }
