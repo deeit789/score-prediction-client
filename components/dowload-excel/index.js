@@ -34,6 +34,8 @@ export default function DownloadExcel() {
           if (uniqueDate[i] === dt.data[j].createDate) {
             var objData = {};
             objData.playerId = dt.data[j].playerId;
+            objData.ip = dt.data[j].ip;
+            objData.fp = dt.data[j].fp;
             objData.result1 = dt.data[j].result1;
             objData.result2 = dt.data[j].result2;
             objData.result3 = dt.data[j].result3;
@@ -62,6 +64,8 @@ export default function DownloadExcel() {
     for (let i = 0; i < dt.data.length; i++) {
       var objData = {};
       objData.playerId = dt.data[i].playerId;
+      objData.ip = dt.data[i].ip;
+      objData.fp = dt.data[i].fp;
       objData.result1 = dt.data[i].result1;
       objData.result2 = dt.data[i].result2;
       objData.result3 = dt.data[i].result3;
@@ -101,6 +105,8 @@ export default function DownloadExcel() {
             return (
               <ExcelSheet data={item.data} name={item.date} key={i}>
                 <ExcelColumn label="playerId" value="playerId" />
+                <ExcelColumn label="ip" value="ip" />
+                <ExcelColumn label="fp" value="fp" />
                 <ExcelColumn label="result1" value="result1" />
                 <ExcelColumn label="result2" value="result2" />
                 <ExcelColumn label="result3" value="result3" />

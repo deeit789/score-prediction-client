@@ -56,7 +56,6 @@ function SHBET() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-
       //get ip, fp
       const ip = await getIP();
       const fp = await getFP();
@@ -84,8 +83,8 @@ function SHBET() {
 
       //handel set date
       const itemToday = dt_date.filter((item) => item.date === today);
-      setLoading(false);
       setDateMatch(itemToday[0]);
+      setLoading(false);
     };
 
     fetchData();
@@ -124,9 +123,9 @@ function SHBET() {
         return { data: item, countdown: new Date(formatCountDown) };
       });
 
-    setLoading(false);
     setListData(_listData || []);
     setDateMatch(itemClicked[0]);
+    setLoading(false);
   };
 
   const handleSlideChange = async (swiper) => {
@@ -148,9 +147,9 @@ function SHBET() {
         return { data: item, countdown: new Date(formatCountDown) };
       });
 
-    setLoading(false);
     setListData(_listData || []);
     setDateMatch(item[0]);
+    setLoading(false);
   };
 
   const onFinishCountDown = () => {
@@ -169,6 +168,7 @@ function SHBET() {
       api["error"]({
         message: "Lỗi",
         description: "Không có dữ liệu trận đấu, vui lòng chọn ngày khác!",
+        placement: "center",
       });
       setLoadingSubmit(false);
       return;
@@ -178,6 +178,7 @@ function SHBET() {
       api["error"]({
         message: "Lỗi",
         description: "Vui lòng nhập đầy đủ và chính xác tên đăng nhập!",
+        placement: "center",
       });
       setLoadingSubmit(false);
       return;
@@ -188,11 +189,16 @@ function SHBET() {
       data.ip = IP;
       data.fp = FP;
       const resData = await postMatch(data);
+      console.log(
+        "🚀 ~ file: index.js ~ line 193 ~ onFinish ~ resData",
+        resData
+      );
       if (resData.status !== 200) {
         setLoadingSubmit(false);
         return api["error"]({
           message: "Lỗi",
           description: "Dự đoán tỉ số không thành công",
+          placement: "center",
         });
       }
 
@@ -201,12 +207,41 @@ function SHBET() {
           api["warning"]({
             message: "Cảnh báo",
             description: `Bạn đã dự đoán tỉ số cho ngày ${dateMatch.date}`,
+            placement: "center",
           });
-        else
+        else {
+          const customNoti = (
+            <>
+              <p>{`Dự đoán tỉ số ngày ${resData.data.createDate} thành công!`}</p>
+              <p>{`Lựa chọn của quý khách:`}</p>
+              <p>
+                {resData.data.result1.includes("undefined")
+                  ? ""
+                  : resData.data.result1}
+              </p>
+              <p>
+                {resData.data.result2.includes("undefined")
+                  ? ""
+                  : resData.data.result2}
+              </p>
+              <p>
+                {resData.data.result3.includes("undefined")
+                  ? ""
+                  : resData.data.result3}
+              </p>
+              <p>
+                {resData.data.result4.includes("undefined")
+                  ? ""
+                  : resData.data.result4}
+              </p>
+            </>
+          );
           api["success"]({
             message: "Thành công",
-            description: `Dự đoán tỉ số ngày ${resData.data.createDate} thành công!`,
+            description: customNoti,
+            placement: "center",
           });
+        }
         setLoadingSubmit(false);
       }
     }
@@ -218,6 +253,7 @@ function SHBET() {
     api["error"]({
       message: "Lỗi",
       description: "Vui lòng nhập dự đoán của tất cả các trận đấu!",
+      placement: "center",
     });
   };
 
@@ -314,7 +350,7 @@ function SHBET() {
   };
 
   return (
-    <div className="shbet">
+    <div className="shbet wc2022">
       {contextHolder}
       <video autoPlay muted loop id="video-bg">
         <source src="/videos/worldcup2022.mp4" type="video/mp4" />
