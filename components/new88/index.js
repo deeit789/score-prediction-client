@@ -56,7 +56,6 @@ function NEW88() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-
       //get ip, fp
       const ip = await getIP();
       const fp = await getFP();
@@ -84,8 +83,8 @@ function NEW88() {
 
       //handel set date
       const itemToday = dt_date.filter((item) => item.date === today);
-      setLoading(false);
       setDateMatch(itemToday[0]);
+      setLoading(false);
     };
 
     fetchData();
@@ -124,9 +123,9 @@ function NEW88() {
         return { data: item, countdown: new Date(formatCountDown) };
       });
 
-    setLoading(false);
     setListData(_listData || []);
     setDateMatch(itemClicked[0]);
+    setLoading(false);
   };
 
   const handleSlideChange = async (swiper) => {
@@ -148,9 +147,9 @@ function NEW88() {
         return { data: item, countdown: new Date(formatCountDown) };
       });
 
-    setLoading(false);
     setListData(_listData || []);
     setDateMatch(item[0]);
+    setLoading(false);
   };
 
   const onFinishCountDown = () => {
@@ -169,6 +168,7 @@ function NEW88() {
       api["error"]({
         message: "Lỗi",
         description: "Không có dữ liệu trận đấu, vui lòng chọn ngày khác!",
+        placement: "center",
       });
       setLoadingSubmit(false);
       return;
@@ -178,6 +178,7 @@ function NEW88() {
       api["error"]({
         message: "Lỗi",
         description: "Vui lòng nhập đầy đủ và chính xác tên đăng nhập!",
+        placement: "center",
       });
       setLoadingSubmit(false);
       return;
@@ -188,11 +189,16 @@ function NEW88() {
       data.ip = IP;
       data.fp = FP;
       const resData = await postMatch(data);
+      console.log(
+        "🚀 ~ file: index.js ~ line 193 ~ onFinish ~ resData",
+        resData
+      );
       if (resData.status !== 200) {
         setLoadingSubmit(false);
         return api["error"]({
           message: "Lỗi",
           description: "Dự đoán tỉ số không thành công",
+          placement: "center",
         });
       }
 
@@ -201,12 +207,41 @@ function NEW88() {
           api["warning"]({
             message: "Cảnh báo",
             description: `Bạn đã dự đoán tỉ số cho ngày ${dateMatch.date}`,
+            placement: "center",
           });
-        else
+        else {
+          const customNoti = (
+            <>
+              <p>{`Dự đoán tỉ số ngày ${resData.data.createDate} thành công!`}</p>
+              <p>{`Lựa chọn của quý khách:`}</p>
+              <p>
+                {resData.data.result1.includes("undefined")
+                  ? ""
+                  : resData.data.result1}
+              </p>
+              <p>
+                {resData.data.result2.includes("undefined")
+                  ? ""
+                  : resData.data.result2}
+              </p>
+              <p>
+                {resData.data.result3.includes("undefined")
+                  ? ""
+                  : resData.data.result3}
+              </p>
+              <p>
+                {resData.data.result4.includes("undefined")
+                  ? ""
+                  : resData.data.result4}
+              </p>
+            </>
+          );
           api["success"]({
             message: "Thành công",
-            description: `Dự đoán tỉ số ngày ${resData.data.createDate} thành công!`,
+            description: customNoti,
+            placement: "center",
           });
+        }
         setLoadingSubmit(false);
       }
     }
@@ -218,6 +253,7 @@ function NEW88() {
     api["error"]({
       message: "Lỗi",
       description: "Vui lòng nhập dự đoán của tất cả các trận đấu!",
+      placement: "center",
     });
   };
 
@@ -314,24 +350,24 @@ function NEW88() {
   };
 
   return (
-    <div className="shbet">
+    <div className="new88 wc2022">
       {contextHolder}
       <video autoPlay muted loop id="video-bg">
         <source src="/videos/worldcup2022.mp4" type="video/mp4" />
       </video>
       <div className="sticker-wc2022-1">
-        <Image src={sticker_wc2022} alt="shbet" />
+        <Image src={sticker_wc2022} alt="new88" />
       </div>
       <div className="sticker-wc2022-2">
-        <Image src={gif_wc2022} alt="shbet" />
+        <Image src={gif_wc2022} alt="new88" />
       </div>
       <div className="wrapper">
         <div className="container">
           <div className="img-logo">
-            <Image src={logo_shbet_wc2022} alt="shbet" />
+            <Image src={logo_shbet_wc2022} alt="new88" />
           </div>
           <div className="box">
-            <h1 className="title">CÙNG SHBET DỰ ĐOÁN TỈ SỐ WORLD CUP 2022</h1>
+            <h1 className="title">CÙNG NEW88 DỰ ĐOÁN TỈ SỐ WORLD CUP 2022</h1>
 
             <div className="box-date">
               <Swiper

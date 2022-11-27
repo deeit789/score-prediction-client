@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactExport from "react-export-excel";
 import moment from "moment";
 import { Button, DatePicker } from "antd";
+import dayjs from "dayjs";
 
 import { DownloadOutlined } from "@ant-design/icons";
 
@@ -17,44 +18,19 @@ const ExcelColumn = ReactExport.ExcelFile.ExcelColumn;
 export default function DownloadExcel() {
   const [dataSet, setDataSet] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [date, setDate] = useState(moment(Date.now()).format("MM/DD/YYYY"));
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const dt = await getAllDataPrediction();
-      var uniqueDate = [...new Set(dt.data?.map((item) => item.createDate))];
-      uniqueDate = uniqueDate.sort();
-      var arrDataSet = [];
-      for (let i = 0; i < uniqueDate.length; i++) {
-        var obj = {};
-        obj.date = uniqueDate[i];
-        obj.data = [];
-
-        for (let j = 0; j < dt.data.length; j++) {
-          if (uniqueDate[i] === dt.data[j].createDate) {
-            var objData = {};
-            objData.playerId = dt.data[j].playerId;
-            objData.ip = dt.data[j].ip;
-            objData.fp = dt.data[j].fp;
-            objData.result1 = dt.data[j].result1;
-            objData.result2 = dt.data[j].result2;
-            objData.result3 = dt.data[j].result3;
-            objData.result4 = dt.data[j].result4;
-            obj.data.push(objData);
-          }
-        }
-        arrDataSet.push(obj);
-      }
-
-      console.log("arrDataSet: ", arrDataSet);
-      setDataSet(arrDataSet);
+      const _dataSet = await getDataByDate(moment(date).format("MM/DD/YYYY"));
+      setDataSet(_dataSet);
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [date]);
 
-  const onChangeDatePicker = async (date, dateString) => {
-    setLoading(true);
+  const getDataByDate = async (dateString) => {
     const dateReq = moment(dateString).format("MM/DD/YYYY");
     const dt = await getDataPredictionByDate({ date: dateReq });
     var obj = {};
@@ -73,8 +49,12 @@ export default function DownloadExcel() {
       obj.data.push(objData);
     }
 
-    setDataSet([obj]);
-    setLoading(false);
+    console.log([obj]);
+    return [obj];
+  };
+
+  const onChangeDatePicker = async (date, dateString) => {
+    setDate(dateString);
   };
 
   return (
@@ -85,7 +65,11 @@ export default function DownloadExcel() {
         justifyContent: "center",
       }}
     >
-      <DatePicker onChange={onChangeDatePicker} />
+      <DatePicker
+        onChange={onChangeDatePicker}
+        defaultValue={dayjs(date, "MM/DD/YYYY")}
+        format="MM/DD/YYYY"
+      />
       <ExcelFile
         filename="du_lieu_du_doan_ti_so"
         element={
@@ -100,7 +84,8 @@ export default function DownloadExcel() {
           </Button>
         }
       >
-        {dataSet.length > 0 &&
+        {dataSet &&
+          dataSet.length > 0 &&
           dataSet.map((item, i) => {
             return (
               <ExcelSheet data={item.data} name={item.date} key={i}>
