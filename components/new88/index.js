@@ -29,7 +29,7 @@ import {
   getFP,
 } from "../../helpers/helper";
 
-import logo_shbet_wc2022 from "../../assets/images/shbet/logo-shbet-wc.png";
+import logo_shbet_wc2022 from "../../assets/images/new88/logo-new88-wc.png";
 import sticker_wc2022 from "../../assets/images/wc2022/wc2022-1.png";
 import gif_wc2022 from "../../assets/images/wc2022/wc2022.gif";
 
@@ -41,7 +41,7 @@ const getCurrentTimeMS = async () => {
   return time.data.servertime || null;
 };
 
-function SHBET() {
+function NEW88() {
   const [mySwiper, setSwiper] = useState();
   const [api, contextHolder] = notification.useNotification();
   const [dateMatch, setDateMatch] = useState({});
@@ -433,4 +433,4 @@ function SHBET() {
   );
 }
 
-export default SHBET;
+export default NEW88;
