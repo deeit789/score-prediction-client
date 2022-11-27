@@ -5,7 +5,13 @@ import * as url from "./url_helper";
 const api = new APIClient();
 
 const pathSite =
-  site.name === "shbet" ? "?path=sh" : site.name === "new88" ? "?path=new" : "";
+  site.name === "shbet"
+    ? "?path=sh"
+    : site.name === "new88"
+    ? "?path=new"
+    : site.name === "789beta"
+    ? "?path=bet789"
+    : "";
 
 export const getIP = () => api.get(url.API_GET_IP);
 export const getFP = () => api.get(url.API_GET_FP);
