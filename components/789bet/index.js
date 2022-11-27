@@ -53,7 +53,6 @@ function BET789() {
   const [FP, setFP] = useState(null);
 
   useEffect(() => {
-    console.log("useEffect1");
     const fetchData = async () => {
       setLoading(true);
       //get ip, fp
@@ -91,7 +90,6 @@ function BET789() {
   }, []);
 
   useEffect(() => {
-    console.log("useEffect2");
     if (mySwiper !== undefined && !mySwiper.destroyed) {
       const fetchData = async () => {
         setLoading(true);
@@ -137,7 +135,6 @@ function BET789() {
     const item = dt_date.filter((item) => item._id - 1 === activeIndex);
 
     if (dateMatch.date === item[0].date) return;
-    console.log("handleSlideChange");
 
     setLoading(true);
     const resData = await matchByDate({ date: item[0].date });
