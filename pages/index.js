@@ -1,6 +1,7 @@
 import Head from "next/head";
 import SHBET from "../components/shbet";
 import NEW88 from "../components/new88";
+import BET789 from "../components/789bet";
 
 import { site } from "../helpers/config";
 
@@ -17,6 +18,8 @@ export default function Home() {
         <SHBET />
       ) : site.name === "new88" ? (
         <NEW88 />
+      ) : site.name === "789bet" ? (
+        <BET789 />
       ) : (
         ""
       )}

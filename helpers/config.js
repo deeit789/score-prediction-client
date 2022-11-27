@@ -3,6 +3,6 @@ module.exports = {
     API_URL: "https://api.shbet.me",
   },
   site: {
-    name: "shbet",
+    name: "789bet",
   },
 };

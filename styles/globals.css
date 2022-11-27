@@ -417,6 +417,33 @@ a {
   background-color: #ff80008f;
 }
 
+/* 789bet */
+.bet789 .box {
+  background-color: #ebebebc9;
+  border: 2px solid #ff8f01ad;
+}
+
+
+
+.bet789 .sc-slidercon .swiper-slide-active,
+.bet789 .box-date .swiper-button-prev,
+.bet789 .box-date .swiper-button-next,
+.bet789 .wc-group,
+.bet789 .wc-result {
+  background-image: linear-gradient(to bottom, #ff9800, #fe4451);
+}
+
+.bet789 .sc-bigdate,
+.bet789 .title {
+  color: #ff8000;
+}
+
+.bet789 .item-match {
+  border: 1px solid #ff8000;
+  background-color: #ff80008f;
+}
+
+
 @media screen and (max-width: 1024px) {
   .ant-notification-center {
     margin: 0;
