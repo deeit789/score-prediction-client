@@ -162,16 +162,24 @@ function BET789() {
     console.log(data);
 
     if (
-      listData.length <= 0 ||
-      (data.team1score === undefined &&
-        data.team2score === undefined &&
-        data.team3score === undefined &&
-        data.team4score === undefined &&
-        data.team5score === undefined &&
-        data.team6score === undefined &&
-        data.team7score === undefined &&
-        data.team8score === undefined)
+      data.team1score === undefined &&
+      data.team2score === undefined &&
+      data.team3score === undefined &&
+      data.team4score === undefined &&
+      data.team5score === undefined &&
+      data.team6score === undefined &&
+      data.team7score === undefined &&
+      data.team8score === undefined
     ) {
+      setLoadingSubmit(false);
+      return api["warning"]({
+        message: "Cảnh báo",
+        description: "Đã hết giờ dự đoán, vui lòng chọn ngày khác!",
+        placement: "center",
+      });
+    }
+
+    if (listData.length <= 0) {
       setLoadingSubmit(false);
       return api["error"]({
         message: "Lỗi",
