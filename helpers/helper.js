@@ -9,7 +9,7 @@ const pathSite =
     ? "?path=sh"
     : site.name === "new88"
     ? "?path=new"
-    : site.name === "789beta"
+    : site.name === "789bet"
     ? "?path=bet789"
     : "";
 

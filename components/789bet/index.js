@@ -184,10 +184,9 @@ function BET789() {
       data.ip = IP;
       data.fp = FP;
       const resData = await postMatch(data);
-      console.log(
-        "🚀 ~ file: index.js ~ line 193 ~ onFinish ~ resData",
-        resData
-      );
+
+      console.log(resData);
+
       if (resData.status !== 200) {
         setLoadingSubmit(false);
         return api["error"]({
@@ -198,46 +197,58 @@ function BET789() {
       }
 
       if (resData.status === 200 && resData.data) {
-        if (resData.data.mess && resData.data.mess === "Dupplicate")
-          api["warning"]({
+        if (resData.data.mess && resData.data.mess === "Failed") {
+          setLoadingSubmit(false);
+          return api["error"]({
+            message: "Lỗi",
+            description: "Lỗi hệ thống",
+            placement: "center",
+          });
+        }
+
+        if (resData.data.mess && resData.data.mess === "Dupplicate") {
+          setLoadingSubmit(false);
+          return api["warning"]({
             message: "Cảnh báo",
             description: `Bạn đã dự đoán tỉ số cho ngày ${dateMatch.date}`,
             placement: "center",
           });
-        else {
+        }
+
+        if (resData.status === 200 && resData.data) {
+          setLoadingSubmit(false);
           const customNoti = (
             <>
               <p>{`Dự đoán tỉ số ngày ${resData.data.createDate} thành công!`}</p>
               <p>{`Lựa chọn của quý khách:`}</p>
               <p>
-                {resData.data.result1.includes("undefined")
+                {resData.data.result1?.includes("undefined")
                   ? ""
                   : resData.data.result1}
               </p>
               <p>
-                {resData.data.result2.includes("undefined")
+                {resData.data.result2?.includes("undefined")
                   ? ""
                   : resData.data.result2}
               </p>
               <p>
-                {resData.data.result3.includes("undefined")
+                {resData.data.result3?.includes("undefined")
                   ? ""
                   : resData.data.result3}
               </p>
               <p>
-                {resData.data.result4.includes("undefined")
+                {resData.data.result4?.includes("undefined")
                   ? ""
                   : resData.data.result4}
               </p>
             </>
           );
-          api["success"]({
+          return api["success"]({
             message: "Thành công",
             description: customNoti,
             placement: "center",
           });
         }
-        setLoadingSubmit(false);
       }
     }
     setLoadingSubmit(false);
