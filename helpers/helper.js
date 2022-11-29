@@ -22,3 +22,5 @@ export const postMatch = (data) => api.post(url.API_MATCH + pathSite, data);
 export const getAllDataPrediction = () => api.get(url.API_ACCOUNT_ADMIN_DATA);
 export const getDataPredictionByDate = (data) =>
   api.post(url.API_MATCH_GET_DATE + pathSite, data);
+export const getPlayerMatchScore = (data) =>
+  api.post(url.API_MATCH_FIND_PLAYER + pathSite, data);

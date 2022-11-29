@@ -159,8 +159,6 @@ function BET789() {
 
   const onFinish = async (data) => {
     setLoadingSubmit(true);
-    console.log(data);
-
     if (
       data.team1score === undefined &&
       data.team2score === undefined &&

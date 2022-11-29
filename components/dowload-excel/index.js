@@ -58,48 +58,60 @@ export default function DownloadExcel() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <DatePicker
-        onChange={onChangeDatePicker}
-        defaultValue={dayjs(date, "MM/DD/YYYY")}
-        format="MM/DD/YYYY"
-      />
-      <ExcelFile
-        filename="du_lieu_du_doan_ti_so"
-        element={
-          <Button
-            type="primary"
-            shape="round"
-            icon={<DownloadOutlined />}
-            size={"default"}
-            loading={loading ? true : false}
-          >
-            Tải Dữ Liệu
-          </Button>
-        }
+    <>
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
       >
-        {dataSet &&
-          dataSet.length > 0 &&
-          dataSet.map((item, i) => {
-            return (
-              <ExcelSheet data={item.data} name={item.date} key={i}>
-                <ExcelColumn label="playerId" value="playerId" />
-                <ExcelColumn label="ip" value="ip" />
-                <ExcelColumn label="fp" value="fp" />
-                <ExcelColumn label="result1" value="result1" />
-                <ExcelColumn label="result2" value="result2" />
-                <ExcelColumn label="result3" value="result3" />
-                <ExcelColumn label="result4" value="result4" />
-              </ExcelSheet>
-            );
-          })}
-      </ExcelFile>
-    </div>
+        <DatePicker
+          onChange={onChangeDatePicker}
+          defaultValue={dayjs(date, "MM/DD/YYYY")}
+          format="MM/DD/YYYY"
+        />
+        <ExcelFile
+          filename="du_lieu_du_doan_ti_so"
+          element={
+            <Button
+              type="primary"
+              shape="round"
+              icon={<DownloadOutlined />}
+              size={"default"}
+              loading={loading ? true : false}
+            >
+              Tải Dữ Liệu
+            </Button>
+          }
+        >
+          {dataSet &&
+            dataSet.length > 0 &&
+            dataSet.map((item, i) => {
+              return (
+                <ExcelSheet data={item.data} name={item.date} key={i}>
+                  <ExcelColumn label="playerId" value="playerId" />
+                  <ExcelColumn label="ip" value="ip" />
+                  <ExcelColumn label="fp" value="fp" />
+                  <ExcelColumn label="result1" value="result1" />
+                  <ExcelColumn label="result2" value="result2" />
+                  <ExcelColumn label="result3" value="result3" />
+                  <ExcelColumn label="result4" value="result4" />
+                </ExcelSheet>
+              );
+            })}
+        </ExcelFile>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        
+      </div>
+    </>
   );
 }
