@@ -76,10 +76,10 @@ export default function DownloadExcel() {
           element={
             <Button
               type="primary"
-              shape="round"
               icon={<DownloadOutlined />}
               size={"default"}
               loading={loading ? true : false}
+              style={{ marginLeft: 10 }}
             >
               Tải Dữ Liệu
             </Button>
@@ -109,9 +109,7 @@ export default function DownloadExcel() {
           alignItems: "center",
           justifyContent: "center",
         }}
-      >
-        
-      </div>
+      ></div>
     </>
   );
 }

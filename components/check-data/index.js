@@ -4,6 +4,8 @@ import { SearchOutlined } from "@ant-design/icons";
 
 import { getPlayerMatchScore } from "../../helpers/helper";
 
+import DownloadExcel from "../dowload-excel";
+
 function CheckData() {
   const [dataPlayer, setDataPlayer] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -83,6 +85,7 @@ function CheckData() {
   return (
     <div className="wrapper">
       <div className="container" style={{ marginTop: 20 }}>
+        <DownloadExcel />
         <Form
           name="basic"
           initialValues={{
@@ -91,6 +94,7 @@ function CheckData() {
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
           autoComplete="off"
+          style={{ marginTop: 20 }}
         >
           <Space
             style={{
