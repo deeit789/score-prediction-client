@@ -463,7 +463,7 @@ function SHBET() {
                       <div className="box-users">
                         <Form.Item name="playerId">
                           <Input
-                            placeholder="Vui lòng nhập chính xác tên đăng nhập!"
+                            placeholder="Tên đăng nhập!"
                             maxLength={13}
                             prefix={<UserOutlined />}
                           />

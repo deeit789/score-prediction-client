@@ -29,8 +29,8 @@ import {
   getFP,
 } from "../../helpers/helper";
 
-import logo_shbet_wc2022 from "../../assets/images/789bet/logo-wc-ls.png";
-import bg from "../../assets/images/789bet/bg.png";
+import logo_shbet_wc2022 from "../../assets/images/jun88/logo-jun88-wc.png";
+import bg from "../../assets/images/jun88/bg.jpg";
 
 import { dt_date } from "../../helpers/common";
 const { Countdown } = Statistic;
@@ -40,7 +40,7 @@ const getCurrentTimeMS = async () => {
   return time.data.servertime || null;
 };
 
-function BET789() {
+function Jun88() {
   const [mySwiper, setSwiper] = useState();
   const [api, contextHolder] = notification.useNotification();
   const [dateMatch, setDateMatch] = useState({});
@@ -363,7 +363,7 @@ function BET789() {
   };
 
   return (
-    <div className="bet789 wc2022">
+    <div className="jun88 wc2022">
       {contextHolder}
       <div
         className="wrapper"
@@ -376,10 +376,10 @@ function BET789() {
       >
         <div className="container">
           <div className="img-logo">
-            <Image src={logo_shbet_wc2022} alt="789BET" />
+            <Image src={logo_shbet_wc2022} alt="Jun88" />
           </div>
           <div className="box">
-            <h1 className="title">CÙNG 789BET DỰ ĐOÁN TỈ SỐ WORLD CUP 2022</h1>
+            <h1 className="title">CÙNG Jun88 DỰ ĐOÁN TỈ SỐ WORLD CUP 2022</h1>
 
             <div className="box-date">
               <Swiper
@@ -481,4 +481,4 @@ function BET789() {
   );
 }
 
-export default BET789;
+export default Jun88;

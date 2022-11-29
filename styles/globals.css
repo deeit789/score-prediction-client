@@ -423,8 +423,6 @@ a {
   border: 2px solid #ff8f01ad;
 }
 
-
-
 .bet789 .sc-slidercon .swiper-slide-active,
 .bet789 .box-date .swiper-button-prev,
 .bet789 .box-date .swiper-button-next,
@@ -441,6 +439,31 @@ a {
 .bet789 .item-match {
   border: 1px solid #ff8000;
   background-color: #ff80008f;
+}
+
+
+/* jun88 */
+.jun88 .box {
+  background-color: #ebebebb8;
+  border: 2px solid #02aad9c4;
+}
+
+.jun88 .sc-slidercon .swiper-slide-active,
+.jun88 .box-date .swiper-button-prev,
+.jun88 .box-date .swiper-button-next,
+.jun88 .wc-group,
+.jun88 .wc-result {
+  background-image: linear-gradient(to bottom, #02a8dd, #0285af);
+}
+
+.jun88 .sc-bigdate,
+.jun88 .title {
+  color: #02a9d9;
+}
+
+.jun88 .item-match {
+  border: 1px solid #02a9d9;
+  background-color: #02aad95d;
 }
 
 
