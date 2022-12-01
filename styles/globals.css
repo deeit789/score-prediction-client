@@ -399,6 +399,16 @@ a {
   filter: grayscale(1);
 }
 
+.btn-history {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalHistory .ant-table-wrapper {
+  overflow: scroll;
+}
+
 /* new88 */
 .new88 .sc-slidercon .swiper-slide-active,
 .new88 .box-date .swiper-button-prev,

@@ -11,6 +11,7 @@ import {
   notification,
   Form,
   Spin,
+  Modal,
 } from "antd";
 import { ClockCircleOutlined, UserOutlined } from "@ant-design/icons";
 
@@ -28,6 +29,8 @@ import {
   getIP,
   getFP,
 } from "../../helpers/helper";
+
+import ModalHistory from "../../components/modalHistory";
 
 import logo_shbet_wc2022 from "../../assets/images/789bet/logo-wc-ls.png";
 import bg from "../../assets/images/789bet/bg.png";
@@ -362,6 +365,13 @@ function BET789() {
     }
   };
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
   return (
     <div className="bet789 wc2022">
       {contextHolder}
@@ -474,6 +484,10 @@ function BET789() {
                 )}
               </div>
             </Form>
+
+            <div className="btn-history">
+              <ModalHistory />
+            </div>
           </div>
         </div>
       </div>
