@@ -28,6 +28,7 @@ import {
   getIP,
   getFP,
 } from "../../helpers/helper";
+import ModalHistory from "../../components/modalHistory";
 
 import logo_shbet_wc2022 from "../../assets/images/jun88/logo-jun88-wc.png";
 import bg from "../../assets/images/jun88/bg.jpg";
@@ -474,6 +475,10 @@ function Jun88() {
                 )}
               </div>
             </Form>
+
+            <div className="btn-history">
+              <ModalHistory />
+            </div>
           </div>
         </div>
       </div>
