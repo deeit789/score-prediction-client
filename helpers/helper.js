@@ -13,6 +13,8 @@ const pathSite =
     ? "?path=bet789"
     : site.name === "jun88"
     ? "?path=jun88"
+    : site.name === "hi88"
+    ? "?path=hi88"
     : "";
 
 export const getIP = () => api.get(url.API_GET_IP);
