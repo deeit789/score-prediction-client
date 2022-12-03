@@ -291,7 +291,11 @@ function BET789() {
             key={index}
           >
             <div div className="wc-group">
-              {`Bảng ${item.data.group}`}
+              {` ${
+                item.data.group.length === 1
+                  ? `Bảng ${item.data.group}`
+                  : `${item.data.group}`
+              } `}
             </div>
             <div className="wc-time-match">
               <span>
