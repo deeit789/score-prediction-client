@@ -38,7 +38,7 @@ const { Countdown } = Statistic;
 
 const getCurrentTimeMS = async () => {
   const time = await getTimeSystem();
-  return time.data.servertime || null;
+  return time.data?.servertime || null;
 };
 
 function NEW88() {
