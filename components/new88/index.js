@@ -97,7 +97,11 @@ function NEW88() {
         const timeServer = await getCurrentTimeMS();
         const today = moment(timeServer).format("MM/DD/YYYY");
         const itemToday = dt_date.filter((item) => item.date === today);
-        if (mySwiper !== undefined && !mySwiper.destroyed) {
+        if (
+          mySwiper !== undefined &&
+          !mySwiper.destroyed &&
+          itemToday.length > 0
+        ) {
           mySwiper.slideTo(itemToday[0]._id - 1);
         }
         setLoading(false);
@@ -107,7 +111,7 @@ function NEW88() {
   }, [mySwiper]);
 
   const handleClickDate = async (date, index) => {
-    if (date === dateMatch.date) return;
+    if (date === dateMatch?.date) return;
     setLoading(true);
     form.resetFields();
 
@@ -135,7 +139,7 @@ function NEW88() {
     const activeIndex = swiper.activeIndex;
     const item = dt_date.filter((item) => item._id - 1 === activeIndex);
 
-    if (dateMatch.date === item[0].date) return;
+    if (dateMatch?.date === item[0].date) return;
 
     setLoading(true);
     const resData = await matchByDate({ date: item[0].date });
@@ -199,7 +203,7 @@ function NEW88() {
     }
 
     if (listData.length > 0) {
-      data.date = dateMatch.date;
+      data.date = dateMatch?.date;
       data.ip = IP;
       data.fp = FP;
       const resData = await postMatch(data);
@@ -464,7 +468,9 @@ function NEW88() {
                 ) : (
                   <div className="list-match">
                     <div className="box-top">
-                      <p className="sc-bigdate">{`${dateMatch.day}, ${dateMatch.text_date}`}</p>
+                      <p className="sc-bigdate">{`${
+                        dateMatch?.day || "VUI LÒNG CHỌN NGÀY DỰ ĐOÁN"
+                      }, ${dateMatch?.text_date || ""}`}</p>
                       <div className="box-users">
                         <Form.Item name="playerId">
                           <Input
